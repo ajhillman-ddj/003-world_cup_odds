@@ -1,0 +1,109 @@
+name: scheduled
+
+on:
+  schedule:
+    - cron: '0 12 * * *' # runs at 12:00 UTC everyday
+    - cron: '54 18 18 11 *'
+    - cron: '59 18 18 11 *'
+    - cron: '04 19 18 11 *'
+    - cron: '09 19 18 11 *'
+    - cron: '14 19 18 11 *'
+    - cron: '19 19 18 11 *'
+    - cron: '24 19 18 11 *'
+    - cron: '29 19 18 11 *'
+    - cron: '34 19 18 11 *'
+    - cron: '39 19 18 11 *'
+    - cron: '44 19 18 11 *'
+    - cron: '49 19 18 11 *'
+    - cron: '54 19 18 11 *'
+    - cron: '59 19 18 11 *'
+    - cron: '04 20 18 11 *'
+    - cron: '09 20 18 11 *'
+    - cron: '14 20 18 11 *'
+    - cron: '19 20 18 11 *'
+    - cron: '24 20 18 11 *'
+    - cron: '29 20 18 11 *'
+    - cron: '34 20 18 11 *'
+    - cron: '39 20 18 11 *'
+    - cron: '44 20 18 11 *'
+    - cron: '49 20 18 11 *'
+    - cron: '54 20 18 11 *'
+    - cron: '59 20 18 11 *'
+    - cron: '54 15 18 11 *'
+    - cron: '59 15 18 11 *'
+    - cron: '04 16 18 11 *'
+    - cron: '09 16 18 11 *'
+    - cron: '14 16 18 11 *'
+    - cron: '19 16 18 11 *'
+    - cron: '24 16 18 11 *'
+    - cron: '29 16 18 11 *'
+    - cron: '34 16 18 11 *'
+    - cron: '39 16 18 11 *'
+    - cron: '44 16 18 11 *'
+    - cron: '49 16 18 11 *'
+    - cron: '54 16 18 11 *'
+    - cron: '59 16 18 11 *'
+    - cron: '04 17 18 11 *'
+    - cron: '09 17 18 11 *'
+    - cron: '14 17 18 11 *'
+    - cron: '19 17 18 11 *'
+    - cron: '24 17 18 11 *'
+    - cron: '29 17 18 11 *'
+    - cron: '34 17 18 11 *'
+    - cron: '39 17 18 11 *'
+    - cron: '44 17 18 11 *'
+    - cron: '49 17 18 11 *'
+    - cron: '54 17 18 11 *'
+    - cron: '59 17 18 11 *'
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: checkout repo content
+        uses: actions/checkout@v3 # checkout the repository content to github runner
+        
+      - run: |
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee -a /etc/apt/sources.list.d/google-chrome.list
+          sudo apt-get update -qqy
+          sudo apt-get -qqy install google-chrome-stable
+          CHROME_VERSION=$(google-chrome-stable --version)
+          CHROME_FULL_VERSION=${CHROME_VERSION%%.*}
+          CHROME_MAJOR_VERSION=${CHROME_FULL_VERSION//[!0-9]}
+          sudo rm /etc/apt/sources.list.d/google-chrome.list
+          export CHROMEDRIVER_VERSION=`curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_MAJOR_VERSION%%.*}`
+          curl -L -O "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+          unzip chromedriver_linux64.zip && chmod +x chromedriver && sudo mv chromedriver /usr/local/bin
+          export CHROMEDRIVER_VERSION=`curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_MAJOR_VERSION%%.*}`
+          curl -L -O "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+          unzip chromedriver_linux64.zip && chmod +x chromedriver && sudo mv chromedriver /usr/local/bin
+          chromedriver -version
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x' # install the python version needed
+          
+      - name: install python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: execute py script # run web_scraping_oddschecker_site.py to get the latest data
+        env: 
+          EMAIL_ADDRESS: ${{ secrets.EMAIL_ADDRESS }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
+        run: python 01-web_scraping_oddschecker_site.py
+          
+      - name: commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A
+          git commit -m "update data" -a
+      - name: push changes
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
