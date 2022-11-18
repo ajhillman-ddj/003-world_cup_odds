@@ -1,0 +1,6 @@
+# This file may be used to create an environment using:
+# $ conda create --name <env> --file <this file>
+# platform: linux-64
+pandas==1.5.1
+bs4==4.11.1
+numpy==1.23.4
