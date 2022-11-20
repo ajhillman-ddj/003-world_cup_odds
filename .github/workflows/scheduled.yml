@@ -3,6 +3,7 @@ name: scheduled
 on:
   schedule:
     - cron: '0 12 * * *' # runs at 12:00 UTC everyday
+    - cron: '00 15 20 11 *'
     - cron: '54 15 20 11 *'
     - cron: '59 15 20 11 *'
     - cron: '04 16 20 11 *'
