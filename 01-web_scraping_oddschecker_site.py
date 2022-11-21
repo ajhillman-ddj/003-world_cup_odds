@@ -37,7 +37,7 @@ for country in listOfCountries:
     oddsArray = countryData.findChildren("td", class_ = "bc", recursive=False)
 
     for i in range(len(oddsArray)):
-        oddsArray[i] = 1/(float(oddsArray[i]["data-fodds"]))
+        oddsArray[i] = 1/(float(oddsArray[i]["data-odig"]))
 
     oddsMean = numpy.mean(oddsArray)
     totalProb += oddsMean
