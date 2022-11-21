@@ -48,4 +48,4 @@ for obj in oddsData:
     
     obj["prob"] = obj["prob"]/totalProb
     
-pandas.DataFrame(oddsData).to_csv("outputs.csv", sep=',', encoding='utf-8', index=False, mode='a', header=False)
+pandas.DataFrame(oddsData).to_csv("outputsUpdated.csv", sep=',', encoding='utf-8', index=False, mode='a', header=False)
