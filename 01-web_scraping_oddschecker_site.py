@@ -22,10 +22,7 @@ action = ActionChains(driver)
 driver.get('https://www.oddschecker.com/football/world-cup/winner')
 soup = BeautifulSoup(driver.page_source)
 
-listOfCountries = soup.find_all( class_ = "popup selTxt" )
-
-for i in range(len(listOfCountries)):
-    listOfCountries[i] = listOfCountries[i]["data-name"]
+listOfCountries = ['Brazil', 'Argentina', 'France', 'Spain', 'England', 'Germany', 'Netherlands', 'Portugal', 'Belgium', 'Denmark', 'Uruguay', 'Croatia', 'Serbia', 'Switzerland', 'Senegal', 'Mexico', 'USA', 'Poland', 'Ecuador', 'Wales', 'Morocco', 'Japan', 'Ghana', 'Canada', 'Cameroon', 'Iran', 'South Korea', 'Australia', 'Qatar', 'Tunisia', 'Saudi Arabia', 'Costa Rica']
 
 oddsData = []
 totalProb = 0
@@ -33,11 +30,17 @@ totalProb = 0
 for country in listOfCountries:
     
     countryData = soup.find( class_ = "diff-row evTabRow bc", attrs={"data-bname" : country} )
-    
-    oddsArray = countryData.findChildren("td", class_ = "bc", recursive=False)
 
-    for i in range(len(oddsArray)):
-        oddsArray[i] = 1/(float(oddsArray[i]["data-odig"]))
+    if countryData is None:
+        
+        oddsArray = [0]
+        
+    else:
+    
+        oddsArray = countryData.findChildren("td", class_ = "bc", recursive=False)
+
+        for i in range(len(oddsArray)):
+            oddsArray[i] = 1/(float(oddsArray[i]["data-odig"]))
 
     oddsMean = numpy.mean(oddsArray)
     totalProb += oddsMean
