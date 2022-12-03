@@ -2,5 +2,6 @@
 # $ conda create --name <env> --file <this file>
 # platform: linux-64
 pandas==1.5.1
-bs4==4.11.1
+bs4
 numpy==1.23.4
+selenium
