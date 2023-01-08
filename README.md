@@ -51,5 +51,5 @@ $: xScale = scaleLinear()
 
 The app includes four possible "views" of the graphic - one for wide desktop/laptop screens, one for narrower desktops/laptops, one for tablets and one for mobile devices. The first three are similar in design but use different aspect ratios and annotation positioning. The final view, for mobile devices, rotates the graph to utilise the vertical screen width (initial checks showed that squeezing all the games and sudden changes in odds across a mobile screen width would not be suitable). 
 
-!(https://github.com/ajhillman-ddj/003-world_cup_odds/blob/main/desktopView.png "View of the visual for desktop devices")
-!(https://github.com/ajhillman-ddj/003-world_cup_odds/blob/main/mobileView.png "View of the visual for desktop devices")
+![](https://github.com/ajhillman-ddj/003-world_cup_odds/blob/main/desktopView.png "View of the visual for desktop devices")
+![](https://github.com/ajhillman-ddj/003-world_cup_odds/blob/main/mobileView.png "View of the visual for desktop devices")
