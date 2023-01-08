@@ -8,6 +8,8 @@ This was a project to visualise the twists and turns of the World Cup. It was in
 
 I started by scraping outright winner odds from the Oddschecker website at regular intervals during each world cup game. This process was conducted using Selenium and GitHub Actions. The scraping code is contained in [this notebook.](https://github.com/ajhillman-ddj/003-world_cup_odds/blob/main/01-web_scraping_oddschecker_site.ipynb) The scheduling instructions were developed using [this code](https://github.com/ajhillman-ddj/003-world_cup_odds/blob/main/02-listing_scheduled_runs.ipynb) and are included in [this .yaml file.](https://github.com/ajhillman-ddj/003-world_cup_odds/blob/main/.github/workflows/main.yml)
 
+## Svelte app development
+
 Once I had the data, I built a Svelte app to visualise it. The app utilises a "discontinuous scale" to create more pixel space for in-game time:
 
 ```
