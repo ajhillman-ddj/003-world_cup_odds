@@ -14,7 +14,7 @@ I set up the scraping schedule just prior to the first game, however issues mean
 
 To collect data on world cups odds prior to the tournament I scraped arhived versions of the webpage from Archive.org. The code for this process is contained in [this file.](https://github.com/ajhillman-ddj/003-world_cup_odds/blob/main/03-web_scraping_historical_oddschecker_data.ipynb)
 
-## Svelte app development
+## Data vis
 
 Once I had the data, I built a Svelte app to visualise it. 
 
